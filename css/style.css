@@ -39,7 +39,7 @@ html {
 
 body {
     font-family: "poppins";
-    background: var(--bg);
+    background: var(--secondary);
 }
 
 nav {
