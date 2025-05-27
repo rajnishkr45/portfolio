@@ -78,7 +78,7 @@ nav ul li a {
     color: var(--text);
     text-decoration: none;
     cursor: pointer;
-    font-size: 18px;
+    font-weight: 550;
 
     &:hover {
         color: var(--primary);
