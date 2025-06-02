@@ -4,7 +4,9 @@
     --primary: #ffe08a;
     --black: #1f2833;
     --secondary: lightgrey;
-    --pink: #ea37a3;
+    --master: #ff4dd5;
+    --pro: #0ecbe8;
+    --learning: #2caf7f;
 }
 
 
@@ -44,7 +46,7 @@ body {
 
 nav {
     position: fixed;
-    /* top: 12px; */
+    top: 0;
     width: 100vw;
     display: flex;
     flex-direction: row;
@@ -87,9 +89,9 @@ nav ul li a {
 
 .resume {
     margin: 0 30px;
-    background: var(--black);
+    background: var(--secondary);
     text-decoration: none;
-    color: var(--bg);
+    color: var(--black);
     outline: none;
     border-radius: 25px;
     padding: 10px 25px;
@@ -115,6 +117,94 @@ nav ul li a {
     transition: transform 0.4s;
 }
 
+/* SKILLS SECTION */
+
+.skills {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 1000px;
+    margin: 100px auto;
+}
+
+.skills-heading {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-card {
+    display: flex;
+    flex-direction: column;
+    width: 310px;
+    margin: 30px;
+    background: #ffffff0d;
+    border: 1px solid var(--text);
+    border-radius: 10px;
+    padding: 20px 40px;
+}
+
+.skill-card-heading {
+    margin: 0px auto 20px;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--secondary);
+}
+
+.skill {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px;
+    margin: 10px;
+    border-radius: 7px;
+}
+
+.skill span{
+    display: flex;
+    align-items: center;
+}
+
+.skill span i{
+    margin-right: 5px;
+}
+
+.legend {
+    color: var(--primary);
+    border: solid 1px var(--primary);
+    background:rgba(255, 209, 82, 0.1);
+}
+
+.master {
+    color: var(--master);
+    border: solid 1px var(--master);
+    background: rgba(255, 115, 222, 0.1);
+}
+
+.pro {
+    color: var(--pro);
+    border: solid 1px var(--pro);
+    background: rgb(14, 203, 232,0.1);
+}
+
+.learning {
+    color: var(--learning);
+    border: solid 1px var(--learning);
+    background:rgba(45, 179, 130, 0.1);
+}
+
+.skill p {
+    color: var(--text);
+}
 
 @keyframes loadAfter {
     0% {
