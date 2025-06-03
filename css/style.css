@@ -53,7 +53,6 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     height: 80px;
     animation: loadAfter 0.7s linear;
     z-index: 999;
@@ -244,12 +243,10 @@ nav ul li a {
     border-radius: 7px;
 }
 
-#projects .skill-card {
 
-    &:hover {
-        transform: none;
-        background-color:rgba(141, 60, 199, 0.2);
-    }
+#projects .skill-card-heading {
+    font-weight: 550;
+    font-size: 20px;
 }
 
 .link-warper {
@@ -264,13 +261,19 @@ nav ul li a {
     text-decoration: none;
 }
 
+.link-warper .legend:hover,
+.link-warper .pro:hover {
+    background-color: transparent;
+}
+
 .link-warper p {
     margin-right: 15px;
 }
 
-.link-warper i{
-    font-size:medium;
+.link-warper i {
+    font-size: medium;
 }
+
 @keyframes loadAfter {
     0% {
         transform: translateY(-100%);
