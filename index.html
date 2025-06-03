@@ -2,13 +2,80 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rajnish Kumar</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: auto;
+            /* background-color: #fff; */
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+      .modal .close {
+            position: absolute;
+            top: 20px;
+            right: -25px;
+            font-size: 52px;
+            color: #ff0000;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -196,32 +263,124 @@
     </section>
     <!-- PROJECTS SECTION ENDS HERE -->
 
+    <!-- ACHIEVEMENTS SECTION STARTS -->
+    <section class="skills" id="achievements">
+        <h2 class="skills-heading">Achievements</h2>
+        <div class="skills-container">
 
-    <h1 style="color:#fff; text-align: center;">PORTFOLIO IS UNDER MAINTENANCE</h1>
+            <!-- Certificate Card Template -->
+            <div class="skill-card">
+                <h3 class="skill-card-heading">CISCO CCNA: 1</h3>
+                <img src="./img/digitalar.png" alt="CCNA 1">
+                <a href="./certificate/ccna_introduction_to_networking.pdf" target="_blank" class="skill learning">
+                    <p>Verify</p>
+                    <span><i class='bx bx-link'></i></span>
+                </a>
+            </div>
 
-    <br><br>
+            <div class="skill-card">
+                <h3 class="skill-card-heading">CISCO CCNA: 2</h3>
+                <img src="./img/digitalar.png" alt="CCNA 2">
+                <a href="./certificate/ccna_switching_routing.pdf" target="_blank" class="skill learning">
+                    <p>Verify</p>
+                    <span><i class='bx bx-link'></i></span>
+                </a>
+            </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var options = {
-                strings: [
-                    "Computer Science Engineer.",
-                    "Web Developer.",
-                    "Web Designer.",
-                    "Free Lancer."
-                ],
-                typeSpeed: 100,   // Typing speed in milliseconds
-                backSpeed: 60,    // Backspace speed in milliseconds
-                loop: true         // Loop the animation
-            };
+            <div class="skill-card">
+                <h3 class="skill-card-heading">CISCO Cyber Security</h3>
+                <img src="./img/digitalar.png" alt="Cyber Security">
+                <a href="./certificate/introduction_to_cybersecurity.pdf" target="_blank" class="skill learning">
+                    <p>Verify</p>
+                    <span><i class='bx bx-link'></i></span>
+                </a>
+            </div>
 
-            var typed = new Typed('.typing', options);
-            var typed = new Typed('.type', options);
-        });
-    </script>
+            <div class="skill-card">
+                <h3 class="skill-card-heading">CISCO Python: 1</h3>
+                <img src="./img/digitalar.png" alt="Python 1">
+                <a href="./certificate/python_1.pdf" target="_blank" class="skill learning">
+                    <p>Verify</p>
+                    <span><i class='bx bx-link'></i></span>
+                </a>
+            </div>
 
+            <div class="skill-card">
+                <h3 class="skill-card-heading">CISCO Python: 2</h3>
+                <img src="./img/digitalar.png" alt="Python 2">
+                <a href="./certificate/python_2.pdf" target="_blank" class="skill learning">
+                    <p>Verify</p>
+                    <span><i class='bx bx-link'></i></span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+    <!-- ACHIEVEMENTS SECTION ENDS -->
+
+    <!-- PDF Modal -->
+    <div id="pdfModal" class="modal">
+
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="spinner" class="spinner"></div>
+            <canvas id="pdfCanvas" style="display:none; width: 100%; height: auto;"></canvas>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="js/portfolio.js"></script>
+    <script>
+        document.querySelectorAll('.skill.learning').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const pdfUrl = this.getAttribute('href');
+                const modal = document.getElementById('pdfModal');
+                const spinner = document.getElementById('spinner');
+                const canvas = document.getElementById('pdfCanvas');
+                const ctx = canvas.getContext('2d');
 
+                spinner.style.display = 'block';
+                canvas.style.display = 'none';
+                modal.style.display = 'flex';
+
+                const loadingTask = pdfjsLib.getDocument(pdfUrl);
+                loadingTask.promise.then(pdf => {
+                    return pdf.getPage(1);
+                }).then(page => {
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    return page.render({
+                        canvasContext: ctx,
+                        viewport: viewport
+                    }).promise;
+                }).then(() => {
+                    spinner.style.display = 'none';
+                    canvas.style.display = 'block';
+                }).catch(error => {
+                    alert("Error loading PDF: " + error.message);
+                    modal.style.display = 'none';
+                });
+            });
+        });
+
+        document.querySelector('.close').onclick = function () {
+            document.getElementById('pdfModal').style.display = 'none';
+            document.getElementById('pdfCanvas').style.display = 'none';
+            document.getElementById('spinner').style.display = 'none';
+        };
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('pdfModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.getElementById('pdfCanvas').style.display = 'none';
+                document.getElementById('spinner').style.display = 'none';
+            }
+        };
+    </script>
 </body>
 
 </html>
