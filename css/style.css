@@ -314,7 +314,7 @@ nav ul li a {
 .modal-content {
     position: relative;
     margin: auto;
-    background-color: #fff;
+    /* background-color: #fff; */
     padding: 20px;
     width: 85%;
     max-width: 800px;
