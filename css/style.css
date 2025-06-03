@@ -124,11 +124,11 @@ nav ul li a {
     align-items: center;
     flex-direction: column;
     /* max-width: 1000px; */
-    margin: 100px auto;
+    margin: 100px auto 50px;
 }
 
 .skills-heading {
-    font-size: 2em;
+    font-size: 28px;
     font-weight: 550;
     color: var(--primary);
     margin-bottom: 20px;
@@ -174,7 +174,8 @@ nav ul li a {
     border: 1px solid var(--text);
     border-radius: 10px;
     padding: 20px 40px;
-    &:hover{
+
+    &:hover {
         transform: translateY(-15px);
     }
 }
@@ -233,6 +234,43 @@ nav ul li a {
     color: var(--text);
 }
 
+
+/* PROJECTS SECTION */
+
+.skill-card img {
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 7px;
+}
+
+#projects .skill-card {
+
+    &:hover {
+        transform: none;
+        background-color:rgba(141, 60, 199, 0.2);
+    }
+}
+
+.link-warper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.link-warper .skill {
+    padding: 5px 8px;
+    cursor: pointer;
+    margin: 0;
+    text-decoration: none;
+}
+
+.link-warper p {
+    margin-right: 15px;
+}
+
+.link-warper i{
+    font-size:medium;
+}
 @keyframes loadAfter {
     0% {
         transform: translateY(-100%);
