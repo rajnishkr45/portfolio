@@ -98,7 +98,7 @@ nav ul li a {
     transition: all 0.2s ease-in-out;
 
     &:hover {
-        scale: 1.04;
+        scale: 1.04 !important;
     }
 }
 
@@ -175,7 +175,7 @@ nav ul li a {
     padding: 20px 40px;
 
     &:hover {
-        transform: translateY(-15px);
+        transform: translateY(-15px) !important;
     }
 }
 
@@ -244,7 +244,7 @@ nav ul li a {
 }
 
 
-#projects .skill-card-heading{
+#projects .skill-card-heading {
     font-weight: 550;
     font-size: 20px;
 }
@@ -263,7 +263,7 @@ nav ul li a {
 
 .link-warper .legend:hover,
 .link-warper .pro:hover {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 .link-warper p {
@@ -281,11 +281,87 @@ nav ul li a {
     cursor: pointer;
     margin: 0;
     text-decoration: none;
+
+    &:hover {
+        border-color: var(--primary) !important;
+        background-color: rgba(255, 209, 82, 0.1) !important;
+    }
+
+    &:hover i {
+        color: var(--primary);
+    }
 }
 
 #achievements .skill-card-heading {
     font-weight: 550;
     font-size: 18px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: relative;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    width: 85%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal .close {
+    position: absolute;
+    top: 0;
+    right: -30px;
+    color: #dc4a4a;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.close i {
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.close:hover {
+    color: red;
+}
+
+.spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
 @keyframes loadAfter {
@@ -355,7 +431,6 @@ nav ul li a {
     .skills-heading::before,
     .skills-heading::after {
         width: 100px;
-
     }
 
     .skills-heading::before {
@@ -365,6 +440,21 @@ nav ul li a {
 
     .skills-heading::after {
         right: -115px;
+    }
+
+    #achievements .skills-heading::before,
+    #achievements .skills-heading::after {
+        width: 80px;
+
+    }
+
+    #achievements .skills-heading::before {
+        left: -90px;
+        /* adjust based on layout */
+    }
+
+    #achievements .skills-heading::after {
+        right: -90px;
     }
 
 }
