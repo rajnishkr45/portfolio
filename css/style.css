@@ -89,7 +89,7 @@ nav ul li a {
 
 .resume {
     margin: 0 30px;
-    background: var(--secondary);
+    background: var(--pro);
     text-decoration: none;
     color: var(--black);
     outline: none;
@@ -123,16 +123,40 @@ nav ul li a {
     display: flex;
     align-items: center;
     flex-direction: column;
-    max-width: 1000px;
+    /* max-width: 1000px; */
     margin: 100px auto;
 }
 
 .skills-heading {
-    font-size: 26px;
-    font-weight: 600;
+    font-size: 2em;
+    font-weight: 550;
     color: var(--primary);
     margin-bottom: 20px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
 }
+
+.skills-heading::before,
+.skills-heading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 300px;
+    height: 3px;
+    background-color: var(--pro);
+    border-radius: 50px;
+}
+
+.skills-heading::before {
+    left: -315px;
+    /* adjust based on layout */
+}
+
+.skills-heading::after {
+    right: -315px;
+}
+
 
 .skills-container {
     display: flex;
@@ -150,6 +174,9 @@ nav ul li a {
     border: 1px solid var(--text);
     border-radius: 10px;
     padding: 20px 40px;
+    &:hover{
+        transform: translateY(-15px);
+    }
 }
 
 .skill-card-heading {
@@ -169,19 +196,19 @@ nav ul li a {
     border-radius: 7px;
 }
 
-.skill span{
+.skill span {
     display: flex;
     align-items: center;
 }
 
-.skill span i{
+.skill span i {
     margin-right: 5px;
 }
 
 .legend {
     color: var(--primary);
     border: solid 1px var(--primary);
-    background:rgba(255, 209, 82, 0.1);
+    background: rgba(255, 209, 82, 0.1);
 }
 
 .master {
@@ -193,13 +220,13 @@ nav ul li a {
 .pro {
     color: var(--pro);
     border: solid 1px var(--pro);
-    background: rgb(14, 203, 232,0.1);
+    background: rgb(14, 203, 232, 0.1);
 }
 
 .learning {
     color: var(--learning);
     border: solid 1px var(--learning);
-    background:rgba(45, 179, 130, 0.1);
+    background: rgba(45, 179, 130, 0.1);
 }
 
 .skill p {
@@ -230,7 +257,7 @@ nav ul li a {
         height: 100vh;
         padding: 50px;
         top: 0;
-        background: var(--secondary);
+        background: var(--bg);
         text-align: left;
         z-index: -1;
     }
@@ -266,6 +293,23 @@ nav ul li a {
 
     .resume {
         margin: 30px 0;
+        background: var(--black);
+        color: var(--bg);
+    }
+
+    .skills-heading::before,
+    .skills-heading::after {
+        width: 100px;
+
+    }
+
+    .skills-heading::before {
+        left: -115px;
+        /* adjust based on layout */
+    }
+
+    .skills-heading::after {
+        right: -115px;
     }
 
 }
