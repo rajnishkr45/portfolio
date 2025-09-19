@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
     --bg: #8aa2a0;
     --text: #fff;
@@ -16,7 +18,7 @@
     box-sizing: border-box;
     font-size: 16px;
     transition: all 0.3s ease-in-out;
-
+    font-family: "poppins";
 }
 
 ::-webkit-scrollbar {
@@ -33,7 +35,6 @@
     margin: 3px;
     border-radius: 0;
 }
-
 
 html {
     scroll-behavior: smooth;
@@ -183,7 +184,6 @@ nav ul li a {
     font-size: 24px;
     margin-right: 20px;
 }
-
 
 /* SKILLS SECTION */
 
@@ -520,7 +520,7 @@ nav ul li a {
         display: none;
     }
 
-    .footer{
+    .footer {
         padding: 30px;
     }
 
