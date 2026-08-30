@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infosys 5-Day DSE/SP Tracker</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --primary: #007bff;
+            --text-main: #333333;
+            --text-muted: #777777;
+            --success: #28a745;
+            --border: #e0e0e0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: var(--text-main);
+        }
+        .progress-container {
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .progress-bar-bg {
+            background-color: var(--border);
+            border-radius: 5px;
+            height: 10px;
+            width: 100%;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            background-color: var(--success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .day-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .day-header {
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            color: var(--primary);
+        }
+        .question-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .question-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .question-item:last-child {
+            border-bottom: none;
+        }
+        .question-item input[type="checkbox"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .question-item label {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+        .question-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .question-item a:hover {
+            text-decoration: underline;
+        }
+        .completed label, .completed a {
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Infosys Prep: 5-Day Sprint</h1>
+        
+        <div class="progress-container">
+            <span id="progress-text">0 / 40 Questions Completed (0%)</span>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div id="tracker-content">
+            </div>
+    </div>
+
+    <script>
+        const daysData = [
+            {
+                day: "Day 1: Arrays, Two Pointers & Hash Maps",
+                questions: [
+                    { id: "d1q1", title: "1. Two Sum", url: "https://leetcode.com/problems/two-sum/" },
+                    { id: "d1q2", title: "2. Maximum Subarray (Kadane's)", url: "https://leetcode.com/problems/maximum-subarray/" },
+                    { id: "d1q3", title: "3. Merge Intervals", url: "https://leetcode.com/problems/merge-intervals/" },
+                    { id: "d1q4", title: "4. Subarray Sum Equals K", url: "https://leetcode.com/problems/subarray-sum-equals-k/" },
+                    { id: "d1q5", title: "5. Container With Most Water", url: "https://leetcode.com/problems/container-with-most-water/" },
+                    { id: "d1q6", title: "6. Sort Colors", url: "https://leetcode.com/problems/sort-colors/" },
+                    { id: "d1q7", title: "7. Next Greater Element I", url: "https://leetcode.com/problems/next-greater-element-i/" },
+                    { id: "d1q8", title: "8. 3Sum", url: "https://leetcode.com/problems/3sum/" }
+                ]
+            },
+            {
+                day: "Day 2: Sliding Window & Greedy",
+                questions: [
+                    { id: "d2q1", title: "1. Best Time to Buy and Sell Stock", url: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" },
+                    { id: "d2q2", title: "2. Jump Game I", url: "https://leetcode.com/problems/jump-game/" },
+                    { id: "d2q3", title: "3. Jump Game II", url: "https://leetcode.com/problems/jump-game-ii/" },
+                    { id: "d2q4", title: "4. Longest Substring Without Repeating Characters", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
+                    { id: "d2q5", title: "5. Max Consecutive Ones III", url: "https://leetcode.com/problems/max-consecutive-ones-iii/" },
+                    { id: "d2q6", title: "6. Minimum Size Subarray Sum", url: "https://leetcode.com/problems/minimum-size-subarray-sum/" },
+                    { id: "d2q7", title: "7. Gas Station", url: "https://leetcode.com/problems/gas-station/" },
+                    { id: "d2q8", title: "8. Assign Cookies", url: "https://leetcode.com/problems/assign-cookies/" }
+                ]
+            },
+            {
+                day: "Day 3: 2D Grid BFS & DFS (Graphs)",
+                questions: [
+                    { id: "d3q1", title: "1. Number of Islands", url: "https://leetcode.com/problems/number-of-islands/" },
+                    { id: "d3q2", title: "2. Rotting Oranges", url: "https://leetcode.com/problems/rotting-oranges/" },
+                    { id: "d3q3", title: "3. Flood Fill", url: "https://leetcode.com/problems/flood-fill/" },
+                    { id: "d3q4", title: "4. Max Area of Island", url: "https://leetcode.com/problems/max-area-of-island/" },
+                    { id: "d3q5", title: "5. 01 Matrix", url: "https://leetcode.com/problems/01-matrix/" },
+                    { id: "d3q6", title: "6. Surrounded Regions", url: "https://leetcode.com/problems/surrounded-regions/" },
+                    { id: "d3q7", title: "7. Pacific Atlantic Water Flow", url: "https://leetcode.com/problems/pacific-atlantic-water-flow/" },
+                    { id: "d3q8", title: "8. Course Schedule", url: "https://leetcode.com/problems/course-schedule/" }
+                ]
+            },
+            {
+                day: "Day 4: Top-Down Dynamic Programming",
+                questions: [
+                    { id: "d4q1", title: "1. Climbing Stairs", url: "https://leetcode.com/problems/climbing-stairs/" },
+                    { id: "d4q2", title: "2. Coin Change", url: "https://leetcode.com/problems/coin-change/" },
+                    { id: "d4q3", title: "3. Coin Change II", url: "https://leetcode.com/problems/coin-change-ii/" },
+                    { id: "d4q4", title: "4. 0/1 Knapsack Problem", url: "https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1" },
+                    { id: "d4q5", title: "5. Partition Equal Subset Sum", url: "https://leetcode.com/problems/partition-equal-subset-sum/" },
+                    { id: "d4q6", title: "6. Longest Increasing Subsequence", url: "https://leetcode.com/problems/longest-increasing-subsequence/" },
+                    { id: "d4q7", title: "7. Longest Common Subsequence", url: "https://leetcode.com/problems/longest-common-subsequence/" },
+                    { id: "d4q8", title: "8. House Robber", url: "https://leetcode.com/problems/house-robber/" }
+                ]
+            },
+            {
+                day: "Day 5: Bit Manipulation & Speed Run",
+                questions: [
+                    { id: "d5q1", title: "1. Single Number I", url: "https://leetcode.com/problems/single-number/" },
+                    { id: "d5q2", title: "2. Single Number II", url: "https://leetcode.com/problems/single-number-ii/" },
+                    { id: "d5q3", title: "3. Counting Bits", url: "https://leetcode.com/problems/counting-bits/" },
+                    { id: "d5q4", title: "4. Subsets", url: "https://leetcode.com/problems/subsets/" },
+                    { id: "d5q5", title: "5. Trapping Rain Water", url: "https://leetcode.com/problems/trapping-rain-water/" },
+                    { id: "d5q6", title: "6. Minimum Window Substring", url: "https://leetcode.com/problems/minimum-window-substring/" },
+                    { id: "d5q7", title: "7. Decode Ways", url: "https://leetcode.com/problems/decode-ways/" },
+                    { id: "d5q8", title: "8. Word Break", url: "https://leetcode.com/problems/word-break/" }
+                ]
+            }
+        ];
+
+        const contentDiv = document.getElementById("tracker-content");
+        const progressText = document.getElementById("progress-text");
+        const progressFill = document.getElementById("progress-fill");
+        let totalQuestions = 0;
+        let completedQuestions = 0;
+
+        function renderTracker() {
+            daysData.forEach(dayInfo => {
+                const card = document.createElement("div");
+                card.className = "day-card";
+
+                const header = document.createElement("h2");
+                header.className = "day-header";
+                header.textContent = dayInfo.day;
+                card.appendChild(header);
+
+                const list = document.createElement("ul");
+                list.className = "question-list";
+
+                dayInfo.questions.forEach(q => {
+                    totalQuestions++;
+                    const isChecked = localStorage.getItem(q.id) === "true";
+                    if (isChecked) completedQuestions++;
+
+                    const listItem = document.createElement("li");
+                    listItem.className = `question-item ${isChecked ? 'completed' : ''}`;
+                    listItem.id = `item-${q.id}`;
+
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.id = q.id;
+                    checkbox.checked = isChecked;
+
+                    checkbox.addEventListener('change', (e) => {
+                        const checked = e.target.checked;
+                        localStorage.setItem(q.id, checked);
+                        
+                        if (checked) {
+                            document.getElementById(`item-${q.id}`).classList.add("completed");
+                            completedQuestions++;
+                        } else {
+                            document.getElementById(`item-${q.id}`).classList.remove("completed");
+                            completedQuestions--;
+                        }
+                        updateProgress();
+                    });
+
+                    const label = document.createElement("label");
+                    label.setAttribute("for", q.id);
+                    
+                    const link = document.createElement("a");
+                    link.href = q.url;
+                    link.target = "_blank";
+                    link.textContent = q.title;
+                    link.rel = "noopener noreferrer"; // Security best practice for target="_blank"
+
+                    label.appendChild(link);
+                    listItem.appendChild(checkbox);
+                    listItem.appendChild(label);
+                    list.appendChild(listItem);
+                });
+
+                card.appendChild(list);
+                contentDiv.appendChild(card);
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const percentage = Math.round((completedQuestions / totalQuestions) * 100) || 0;
+            progressText.textContent = `${completedQuestions} / ${totalQuestions} Questions Completed (${percentage}%)`;
+            progressFill.style.width = `${percentage}%`;
+        }
+
+        // Initialize App
+        renderTracker();
+    </script>
+</body>
+</html>
