@@ -1,0 +1,722 @@
+/* ==========================================================================
+   SHARED TEMPLATE LAYOUT & SAFE-ZONE SPACING
+   ========================================================================== */
+
+   .tpl-root {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  /* Mobile Safe Zone: leaves top ~34% completely open for OS clock & date,
+     and clears bottom flashlight/camera buttons */
+  .tpl-root.is-mobile {
+    justify-content: flex-end;
+    padding: 218px 18px 66px;
+  }
+  
+  /* Desktop Safe Zone: clears top menu/clock and bottom dock */
+  .tpl-root.is-desktop {
+    justify-content: center;
+    padding: 122px 48px 56px;
+  }
+  
+  .tpl-inner {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  
+  .tpl-root.is-desktop .tpl-inner {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 28px;
+    align-items: center;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  
+  .tpl-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* ==========================================================================
+     1. MISSION CONTROL — Deep Space HUD, Electric Cyan & Emerald
+     ========================================================================== */
+  
+  .tpl-mission {
+    background-color: #04070d;
+    background-image:
+      radial-gradient(ellipse 90% 42% at 50% 0%, rgba(14, 165, 233, 0.24), transparent 68%),
+      radial-gradient(circle at 85% 88%, rgba(16, 185, 129, 0.16), transparent 48%),
+      linear-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 24px 24px, 24px 24px;
+    color: #f8fafc;
+  }
+  
+  .mc-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .mc-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.34);
+    padding: 2.5px 8px;
+    border-radius: 6px;
+  }
+  
+  .mc-target-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+  }
+  
+  .mc-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+    color: #ffffff;
+  }
+  
+  .mc-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  
+  .mc-timer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  
+  .mc-unit {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.22);
+    border-radius: 11px;
+    padding: 8px 4px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  .mc-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 19px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.05;
+  }
+  
+  .mc-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  
+  .mc-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .mc-progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.06em;
+    color: #94a3b8;
+  }
+  
+  .mc-progress-bar {
+    height: 5px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+  
+  .mc-progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #0ea5e9 0%, #38bdf8 55%, #10b981 100%);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.55);
+  }
+  
+  .mc-milestones {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 13px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .mc-ms-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 11px;
+    padding: 5px 8px;
+    border-radius: 8px;
+  }
+  
+  .mc-ms-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  
+  .mc-ms-dot {
+    width: 6.5px;
+    height: 6.5px;
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+  
+  .mc-ms-item.done .mc-ms-dot { background: #10b981; }
+  .mc-ms-item.done .mc-ms-text { color: #64748b; text-decoration: line-through; }
+  
+  .mc-ms-item.active {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+  }
+  .mc-ms-item.active .mc-ms-dot {
+    background: #38bdf8;
+    box-shadow: 0 0 9px #38bdf8;
+  }
+  .mc-ms-item.active .mc-ms-text { color: #ffffff; font-weight: 600; }
+  
+  .mc-ms-item.upcoming .mc-ms-dot { border: 1.5px solid #475569; }
+  .mc-ms-item.upcoming .mc-ms-text { color: #cbd5e1; }
+  
+  .mc-ms-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .mc-ms-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #64748b;
+    flex-shrink: 0;
+  }
+  
+  /* ==========================================================================
+     2. BOARDING PASS — Swiss Aviation Ticket with Perforated Notches
+     ========================================================================== */
+  
+  .tpl-boarding {
+    background:
+      radial-gradient(circle at 80% 12%, rgba(249, 115, 22, 0.24), transparent 46%),
+      linear-gradient(170deg, #070d19 0%, #101b33 55%, #060911 100%);
+    color: #0f172a;
+  }
+  
+  .bp-card {
+    background: #fcfaf5;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  
+  .bp-top {
+    background: #0b1324;
+    color: #ffffff;
+    padding: 9px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #f97316;
+  }
+  
+  .bp-airline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #cbd5e1;
+    text-transform: uppercase;
+  }
+  
+  .bp-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fb923c;
+    background: rgba(249, 115, 22, 0.16);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  
+  .bp-body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    position: relative;
+  }
+  
+  .bp-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #0b1324;
+    line-height: 1.08;
+  }
+  
+  .bp-meta-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 8px 0;
+    border-top: 1px solid #e5e0d5;
+    border-bottom: 1.5px dashed #cbd5e1;
+    position: relative;
+  }
+  
+  /* Ticket Tear-Line Side Notches */
+  .bp-meta-strip::before,
+  .bp-meta-strip::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    width: 13px;
+    height: 13px;
+    border-radius: 99px;
+    background: #0c1426;
+  }
+  .bp-meta-strip::before { left: -21px; }
+  .bp-meta-strip::after { right: -21px; }
+  
+  .bp-meta-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+  
+  .bp-meta-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0b1324;
+    margin-top: 1px;
+  }
+  
+  .bp-milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .bp-ms-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10.5px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: #f3efe6;
+    color: #1e293b;
+  }
+  
+  .bp-ms-item.active {
+    background: #ffedd5;
+    color: #9a3412;
+    font-weight: 700;
+    border-left: 3px solid #f97316;
+  }
+  
+  .bp-ms-item.done {
+    opacity: 0.5;
+    text-decoration: line-through;
+  }
+  
+  .bp-ms-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #64748b;
+  }
+  
+  .bp-barcode {
+    height: 18px;
+    margin-top: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      #0b1324 0px, #0b1324 2px,
+      transparent 2px, transparent 4px,
+      #0b1324 4px, #0b1324 5px,
+      transparent 5px, transparent 8px,
+      #0b1324 8px, #0b1324 11px,
+      transparent 11px, transparent 13px
+    );
+    opacity: 0.82;
+  }
+  
+  /* ==========================================================================
+     3. EDITORIAL POSTER — Archival Cream, Forest Ink & Terracotta (Light)
+     ========================================================================== */
+  
+  .tpl-editorial {
+    background-color: #f4efe6;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(194, 65, 12, 0.09), transparent 45%),
+      radial-gradient(rgba(20, 36, 30, 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 16px 16px;
+    color: #14241e;
+  }
+  
+  .ed-kicker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid #14241e;
+    border-bottom: 1px solid rgba(20, 36, 30, 0.22);
+    padding: 5px 0;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3f4f48;
+  }
+  
+  .ed-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 0.96;
+    letter-spacing: -0.015em;
+    color: #14241e;
+  }
+  
+  .ed-countdown-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 0;
+    border-top: 1px solid rgba(20, 36, 30, 0.15);
+    border-bottom: 1.5px solid #14241e;
+  }
+  
+  .ed-big-days {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 42px;
+    line-height: 0.9;
+    color: #c2410c;
+  }
+  
+  .ed-sub-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #3f4f48;
+  }
+  
+  .ed-milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .ed-ms-item {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 11px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(20, 36, 30, 0.14);
+  }
+  
+  .ed-ms-num {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  .ed-ms-item.done .ed-ms-text {
+    text-decoration: line-through;
+    color: #9ca3af;
+  }
+  
+  .ed-ms-item.active .ed-ms-text {
+    font-weight: 700;
+    color: #14241e;
+  }
+  
+  .ed-ms-item.active .ed-ms-num {
+    color: #c2410c;
+    font-weight: 700;
+  }
+  
+  .ed-ms-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #57655e;
+  }
+  
+  /* ==========================================================================
+     4. FROSTED DEPTH — Spatial Aurora Liquid Glass
+     ========================================================================== */
+  
+  .tpl-frosted {
+    background:
+      radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.58), transparent 46%),
+      radial-gradient(circle at 86% 24%, rgba(232, 121, 249, 0.45), transparent 48%),
+      radial-gradient(circle at 75% 84%, rgba(99, 102, 241, 0.58), transparent 50%),
+      radial-gradient(circle at 18% 86%, rgba(251, 146, 60, 0.36), transparent 45%),
+      #080c18;
+    color: #ffffff;
+  }
+  
+  .fr-glass {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0.06) 100%);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-top-color: rgba(255, 255, 255, 0.42);
+    border-left-color: rgba(255, 255, 255, 0.3);
+    border-radius: 18px;
+    padding: 13px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  
+  .fr-pill {
+    display: inline-block;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2.5px 9px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    margin-bottom: 6px;
+  }
+  
+  .fr-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+  }
+  
+  .fr-subtitle {
+    font-size: 10px;
+    opacity: 0.82;
+    margin-top: 2px;
+  }
+  
+  .fr-timer-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 9px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  
+  .fr-stat-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.05;
+  }
+  
+  .fr-stat-lbl {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  
+  .fr-ms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5.5px;
+  }
+  
+  .fr-ms-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    padding: 5.5px 9px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .fr-ms-item.active {
+    background: rgba(255, 255, 255, 0.24);
+    border-color: rgba(255, 255, 255, 0.38);
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  }
+  
+  .fr-ms-item.done {
+    opacity: 0.52;
+    text-decoration: line-through;
+  }
+  
+  .fr-ms-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    opacity: 0.85;
+  }
+  
+  /* ==========================================================================
+     5. TERMINAL / DEV — Modern Warp / Ghostty CLI
+     ========================================================================== */
+  
+  .tpl-terminal {
+    background-color: #070a11;
+    background-image:
+      radial-gradient(circle at 50% 8%, rgba(56, 189, 248, 0.16), transparent 55%),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.014) 0px,
+        rgba(255, 255, 255, 0.014) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    color: #e2e8f0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .tm-window {
+    background: rgba(13, 18, 30, 0.92);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  }
+  
+  .tm-bar {
+    background: #121827;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    padding: 7px 11px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .tm-dots {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .tm-dots span {
+    width: 7.5px;
+    height: 7.5px;
+    border-radius: 99px;
+  }
+  
+  .tm-dots span:nth-child(1) { background: #f87171; }
+  .tm-dots span:nth-child(2) { background: #fbbf24; }
+  .tm-dots span:nth-child(3) { background: #4ade80; }
+  
+  .tm-bar-title {
+    font-size: 9px;
+    color: #94a3b8;
+  }
+  
+  .tm-body {
+    padding: 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 10.5px;
+  }
+  
+  .tm-cmd {
+    color: #4ade80;
+    font-weight: 700;
+  }
+  
+  .tm-cmd-arg {
+    color: #38bdf8;
+  }
+  
+  .tm-countdown-box {
+    background: #090d16;
+    border: 1px solid rgba(56, 189, 248, 0.24);
+    border-radius: 8px;
+    padding: 9px 10px;
+  }
+  
+  .tm-big {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+  
+  .tm-ascii-bar {
+    font-size: 9.5px;
+    color: #4ade80;
+    margin-top: 4px;
+  }
+  
+  .tm-ms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5.5px;
+  }
+  
+  .tm-ms-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 10px;
+  }
+  
+  .tm-ms-item.done { color: #475569; }
+  .tm-ms-item.active {
+    color: #fb923c;
+    font-weight: 700;
+  }
+  .tm-ms-item.upcoming { color: #94a3b8; }

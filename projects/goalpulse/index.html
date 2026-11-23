@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoalPulse — Lock Screen Countdown Builder</title>
+
+  <script>
+    (function () {
+      const saved = localStorage.getItem('deadline-studio-theme');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+
+  <link rel="stylesheet" href="css/studio.css" />
+  <link rel="stylesheet" href="css/templates.css" />
+</head>
+<body>
+  <div class="studio-layout">
+
+    <!-- LEFT PANEL: Minimal Editor -->
+    <aside class="studio-sidebar">
+      <header class="sidebar-header">
+        <div class="brand">
+          <div class="brand-mark">GP</div>
+          <div class="brand-text">
+            <h1 class="brand-title">GoalPulse</h1>
+            <p class="brand-subtitle">Your Deadline, Your Lock Screen</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button id="btn-theme-toggle" type="button" class="icon-btn" aria-label="Toggle theme" title="Dark / Light Mode">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <button id="btn-reset" type="button" class="ghost-btn">Reset</button>
+        </div>
+      </header>
+
+      <div class="sidebar-body">
+        <!-- 1. Quick Ideas -->
+        <section class="control-section">
+          <div class="section-head">
+            <span class="section-label">Try a Sample</span>
+          </div>
+          <div id="preset-list" class="preset-grid"></div>
+        </section>
+
+        <!-- 2. Style -->
+        <section class="control-section">
+          <div class="section-head">
+            <span class="section-label">1. Choose Style</span>
+          </div>
+          <div id="template-list" class="template-grid"></div>
+        </section>
+
+        <!-- 3. Goal & Date -->
+        <section class="control-section">
+          <div class="section-head">
+            <span class="section-label">2. Set Your Deadline</span>
+          </div>
+
+          <div class="field-group">
+            <label for="input-title" class="field-label">Goal Name</label>
+            <input id="input-title" type="text" maxlength="42" placeholder="e.g., GyanCheck AI Launch" class="text-input" />
+          </div>
+
+          <div class="field-group">
+            <label for="input-target-date" class="field-label">Target Date & Time</label>
+            <input id="input-target-date" type="datetime-local" class="text-input date-input" />
+          </div>
+        </section>
+
+        <!-- 4. Milestones -->
+        <section class="control-section">
+          <div class="section-head">
+            <div>
+              <span class="section-label">3. Milestones</span>
+              <p class="section-subhint">Click dot to change status</p>
+            </div>
+            <button id="btn-add-milestone" type="button" class="secondary-btn small-btn">+ Add</button>
+          </div>
+
+          <div id="milestone-editor-list" class="milestone-list"></div>
+        </section>
+      </div>
+    </aside>
+
+    <!-- RIGHT STAGE: Live Preview -->
+    <main class="studio-stage">
+      <div class="stage-toolbar">
+        <div class="toolbar-left">
+          <div class="segmented-control" role="group" aria-label="Device format">
+            <button id="btn-device-mobile" type="button" data-device="mobile" class="segment-btn is-active">Phone (9:16)</button>
+            <button id="btn-device-desktop" type="button" data-device="desktop" class="segment-btn">Desktop (16:9)</button>
+          </div>
+
+          <label class="toggle-chip">
+            <input id="toggle-os-overlay" type="checkbox" checked />
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            <span class="toggle-text">Clock Safe-Zone</span>
+          </label>
+        </div>
+
+        <div class="toolbar-right">
+          <button id="btn-copy-link" type="button" class="secondary-btn">Share</button>
+          <button id="btn-download-png" type="button" class="primary-btn">Download PNG</button>
+        </div>
+      </div>
+
+      <div class="stage-viewport">
+        <div id="device-frame" class="device-frame device-mobile">
+          <div id="device-screen" class="device-screen">
+            <div id="export-canvas" class="export-canvas"></div>
+            <div id="os-overlay" class="os-overlay" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite">Saved!</div>
+    </main>
+
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
